@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+    <title>JSONP Demo</title>
+  </head>
+  <body>
+    <span id="time"></span><br>
+    <input type="button" value="Now" onclick="getTime()">
+    <input type="button" value="My Location" onclick="getMyLocation()">
+    <script>
+
+function timeCallback(param) {
+  time.innerHTML = param;
+}
+
+function getTime() {
+  var script = document.createElement("script");
+  script.src = "http://localhost/jsonpdemo/?callback=timeCallback&random=" + Math.random();
+  document.body.insertBefore(script, document.body.firstChild);
+}
+
+function locationCallback(param) {
+  alert("You're at IP address " + param.ip + ", which is in " +
+      param.city + ", " + param.region_name);
+}
+
+function getMyLocation() {
+  var script = document.createElement("script");
+  script.src = "http://freegeoip.net/json/?callback=locationCallback&random=" + Math.random();
+  document.body.insertBefore(script, document.body.firstChild);
+}
+
+function ping() {
+  var img = new Image();
+  img.onload = function() {
+    alert("Ping OK");
+  };
+  img.onerror = function() {
+    alert("Ping Error");
+  };
+  img.src = "http://localhost/images/facebook.gif";
+}
+
+getTime();
+
+    </script>
+  </body>
+</html>

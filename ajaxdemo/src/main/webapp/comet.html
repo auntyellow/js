@@ -1,0 +1,136 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+    <title>Comet Chat Demo</title>
+  </head>
+  <body>
+    <script language="javascript"><!--
+var chatUrl = "";
+var session = "";
+var status = 0;
+
+function setStatus(s) {
+  status = s;
+  if (s == 1) {
+    btnConnect.disabled = true;
+    return;
+  }
+  btnConnect.disabled = false;
+  if (s == 0) {
+    btnConnect.value = "Connect";
+    btnSend.disabled = true;
+  } else {
+    btnConnect.value = "Disconnect";
+    btnSend.disabled = false;
+  }
+}
+
+function get00(n) {
+  return (n < 10 ? "0" : "") + n;
+}
+
+function getTimeString() {
+   var d = new Date();
+   var hh = d.getHours();
+   var mm = d.getMinutes();
+   var ss = d.getSeconds();
+   return get00(hh) + ":" + get00(mm) + ":" + get00(ss);
+}
+
+function send(message) {
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", chatUrl + "?cmd=send", true);
+  xhr.onerror = function() {
+    alert("Server Error");
+    setStatus(0);
+  };
+  xhr.send(message);
+}
+
+function recv() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", chatUrl + "?cmd=recv&session=" + session + "&random=" + Math.random(), true);
+  xhr.onload = function() {
+    txtRecv.value += xhr.responseText;
+    txtRecv.scrollTop = txtRecv.scrollHeight;
+    if (status == 2) {
+      recv();
+    }
+  };
+  xhr.onerror = function() {
+    alert("Server Disconnected");
+    setStatus(0);
+  };
+  xhr.send(null);
+}
+
+function btnConnect_Click() {
+  if (status == 0) {
+    chatUrl = txtUrl.value;
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", chatUrl + "?cmd=open&random=" + Math.random(), true);
+    xhr.onload = function() {
+      session = xhr.responseText;
+      setStatus(2);
+      recv();
+      if (!chkAnonymous.checked) {
+        send("[" + txtMyName.value + " Connected at " + getTimeString() + "]\r\n");
+      }
+    };
+    xhr.onerror = function() {
+      alert("Server Error");
+      setStatus(0);
+    };
+    xhr.send(null);
+  } else {
+    if (!chkAnonymous.checked) {
+      send("[" + txtMyName.value + " Disconnected at " + getTimeString() + "]\r\n");
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", chatUrl + "?cmd=close&session=" + session + "&random=" + Math.random(), true);
+    xhr.send(null);
+    setStatus(0);
+  }
+}
+
+function chkAnonymous_Click() {
+  txtMyName.disabled = chkAnonymous.checked;
+}
+
+function btnSend_Click() {
+  if (chkAnonymous.checked) {
+    send(txtSend.value);
+  } else {
+    send("[" + txtMyName.value + " Sent at " + getTimeString() + "]\r\n" + txtSend.value + "\r\n");
+  }
+  txtSend.value = "";
+}
+
+function btnClear_Click() {
+  txtRecv.value = "";
+}
+    --></script>
+    <table>
+      <tr>
+        <td nowrap>Chat URL</td>
+        <td nowrap><input type="text" id="txtUrl" value="http://localhost/cometchat/" size="20"></td>
+        <td nowrap><input type="button" id="btnConnect" value="Connect" onclick="btnConnect_Click()"></td>
+      </tr>
+      <tr>
+        <td nowrap>My Name</td>
+        <td nowrap><input type="text" id="txtMyName" value="My Name" size="20"></td>
+        <td nowrap><input type="checkbox" id="chkAnonymous" onclick="chkAnonymous_Click()"><label for="chkAnonymous">Anonymous</label></td>
+      </tr>
+      <tr>
+        <td colspan="3"><textarea id="txtRecv" rows="6" cols="44" readonly></textarea></td>
+      </tr>
+      <tr>
+        <td colspan="3"><textarea id="txtSend" rows="3" cols="44"></textarea></td>
+      </tr>
+      <tr>
+        <td colspan="3" align="center"><input type="button" id="btnSend" value="Send" disabled onclick="btnSend_Click()">
+            <input type="button" id="btnClear" value="Clear" onclick="btnClear_Click()"></td>
+      </tr>
+    </table>
+  </body>
+</html>

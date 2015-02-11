@@ -1,0 +1,11 @@
+body {
+  border:	0px;
+  margin:	0px;
+  overflow:	hidden;
+  background:	url(background.gif) no-repeat;
+}
+
+div {
+  position:	absolute;
+  font-size:	12px;
+}
