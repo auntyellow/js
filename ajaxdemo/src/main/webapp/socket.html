@@ -1,9 +1,33 @@
+<!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
     <title>Socket Chat Demo</title>
+    <script language="javascript" src="names.js"></script>
   </head>
   <body>
+    <table>
+      <tr>
+        <td nowrap>Chat URL</td>
+        <td nowrap><input type="text" id="txtUrl" value="ws://localhost/socketchat/" size="20"></td>
+        <td nowrap><input type="button" id="btnConnect" value="Connect" onclick="btnConnect_Click()"></td>
+      </tr>
+      <tr>
+        <td nowrap>My Name</td>
+        <td nowrap><input type="text" id="txtMyName" size="20"></td>
+        <td nowrap><input type="checkbox" id="chkAnonymous" onclick="chkAnonymous_Click()"><label for="chkAnonymous">Anonymous</label></td>
+      </tr>
+      <tr>
+        <td colspan="3"><textarea id="txtRecv" rows="6" cols="44" readonly></textarea></td>
+      </tr>
+      <tr>
+        <td colspan="3"><textarea id="txtSend" rows="3" cols="44"></textarea></td>
+      </tr>
+      <tr>
+        <td colspan="3" align="center"><input type="button" id="btnSend" value="Send" disabled onclick="btnSend_Click()">
+            <input type="button" id="btnClear" value="Clear" onclick="btnClear_Click()"></td>
+      </tr>
+    </table>
     <script language="javascript"><!--
 var socket = null;
 var status = 0;
@@ -82,28 +106,8 @@ function btnSend_Click() {
 function btnClear_Click() {
   txtRecv.value = "";
 }
+
+txtMyName.value = Names.get();
     --></script>
-    <table>
-      <tr>
-        <td nowrap>Chat URL</td>
-        <td nowrap><input type="text" id="txtUrl" value="ws://localhost/socketchat/" size="20"></td>
-        <td nowrap><input type="button" id="btnConnect" value="Connect" onclick="btnConnect_Click()"></td>
-      </tr>
-      <tr>
-        <td nowrap>My Name</td>
-        <td nowrap><input type="text" id="txtMyName" value="My Name" size="20"></td>
-        <td nowrap><input type="checkbox" id="chkAnonymous" onclick="chkAnonymous_Click()"><label for="chkAnonymous">Anonymous</label></td>
-      </tr>
-      <tr>
-        <td colspan="3"><textarea id="txtRecv" rows="6" cols="44" readonly></textarea></td>
-      </tr>
-      <tr>
-        <td colspan="3"><textarea id="txtSend" rows="3" cols="44"></textarea></td>
-      </tr>
-      <tr>
-        <td colspan="3" align="center"><input type="button" id="btnSend" value="Send" disabled onclick="btnSend_Click()">
-            <input type="button" id="btnClear" value="Clear" onclick="btnClear_Click()"></td>
-      </tr>
-    </table>
   </body>
 </html>
