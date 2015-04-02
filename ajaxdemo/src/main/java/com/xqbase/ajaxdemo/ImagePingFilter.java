@@ -11,7 +11,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
-@WebFilter(urlPatterns="/images/*")
+@WebFilter("/images/*")
 public class ImagePingFilter implements Filter {
 	@Override
 	public void init(FilterConfig conf) {/**/}
