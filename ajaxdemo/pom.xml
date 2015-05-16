@@ -18,25 +18,25 @@
 		<dependency>
 			<groupId>com.xqbase</groupId>
 			<artifactId>xqbase-util</artifactId>
-			<version>0.2.4</version>
+			<version>0.2.6</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-catalina</artifactId>
-			<version>8.0.12</version>
+			<version>8.0.21</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-websocket</artifactId>
-			<version>8.0.12</version>
+			<version>8.0.21</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-coyote</artifactId>
-			<version>8.0.12</version>
+			<version>8.0.21</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
