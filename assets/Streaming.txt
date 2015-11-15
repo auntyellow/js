@@ -1,0 +1,9 @@
+hide footbox
+Browser -> Server: Request
+Browser <-- Server: Resp. Header
+|||
+Browser <-- Server: Message
+|||
+Browser <-- Server: Message
+|||
+Browser <-- Server: Message

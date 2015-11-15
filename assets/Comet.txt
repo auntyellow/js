@@ -1,0 +1,9 @@
+hide footbox
+Browser -> Server: Request
+|||
+|||
+Browser <- Server: Response
+Browser -> Server: Request
+|||
+|||
+Browser <- Server: Response
