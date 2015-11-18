@@ -76,7 +76,6 @@ public class StreamingChatServlet extends HttpServlet {
 		if (cmd == null) {
 			return;
 		}
-		resp.setContentType("application/octet-stream");
 		switch (cmd) {
 		case "open":
 			Random random = new Random();
@@ -85,6 +84,7 @@ public class StreamingChatServlet extends HttpServlet {
 			synchronized (this) {
 				dataMap.put(session, new ByteArrayOutputStream());
 			}
+			resp.setContentType("text/plain");
 			resp.getWriter().print(session);
 			break;
 		case "send":
@@ -112,6 +112,7 @@ public class StreamingChatServlet extends HttpServlet {
 				async.setTimeout(0);
 				asyncMap.put(async, session);
 			}
+			resp.setContentType("application/octet-stream");
 			break;
 		case "close":
 			session = req.getParameter("session");

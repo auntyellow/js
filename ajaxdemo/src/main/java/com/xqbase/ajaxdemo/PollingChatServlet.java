@@ -28,7 +28,6 @@ public class PollingChatServlet extends HttpServlet {
 		if (cmd == null) {
 			return;
 		}
-		resp.setContentType("application/octet-stream");
 		switch (cmd) {
 		case "open":
 			Random random = new Random();
@@ -37,6 +36,7 @@ public class PollingChatServlet extends HttpServlet {
 			synchronized (this) {
 				dataMap.put(session, new ByteArrayOutputStream());
 			}
+			resp.setContentType("text/plain");
 			resp.getWriter().print(session);
 			break;
 		case "send":
@@ -62,6 +62,7 @@ public class PollingChatServlet extends HttpServlet {
 			synchronized (this) {
 				baos = dataMap.get(session);
 				if (baos != null && baos.size() > 0) {
+					resp.setContentType("application/octet-stream");
 					resp.getOutputStream().write(baos.toByteArray());
 					baos.reset();
 				}
